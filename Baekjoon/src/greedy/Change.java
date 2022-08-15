@@ -9,7 +9,7 @@ public class Change {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int change = 1000 - Integer.parseInt(br.readLine());
-		int[] bills = new int[] {500, 100, 50, 10, 5, 1};
+		int[] bills = {500, 100, 50, 10, 5, 1};
 		
 		int result = 0;
 		for (int i = 0; i < 6; i++) {
