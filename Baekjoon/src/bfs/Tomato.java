@@ -3,10 +3,10 @@ package bfs;
 import java.util.*;
 import java.io.*;
 
-class Node {
+class Mode {
 	private int x, y;
 	
-	public Node(int x, int y) {
+	public Mode(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -24,32 +24,30 @@ public class Tomato {
 	public static int n, m;
 	public static int[][] graph = new int[1001][1001];
 	public static int[][] ripenTime = new int[1001][1001];
+	public static Queue<Mode> q = new LinkedList<>();
 	public static boolean allRipe;
+	public static int count;
 	
 	public static int[] dx = {-1, 1, 0, 0};
 	public static int[] dy = {0, 0, -1, 1};
 	
-	public static void bfs(int x, int y) {
-		if (graph[x][y] == 0 || graph[x][y] == -1) return;
-		
-		Queue<Node> q = new LinkedList<>();
-		q.offer(new Node(x, y));
-		
+	public static void bfs() {
 		while (!q.isEmpty()) {
-			Node node = q.poll();
-			x = node.getX();
-			y = node.getY();
+			Mode node = q.poll();
+			int x = node.getX();
+			int y = node.getY();
 			
 			for (int i = 0; i < 4; i++) {
 				int nx = x + dx[i];
 				int ny = y + dy[i];
 				
 				if (nx < 1 || nx > n || ny < 1 || ny > m) continue;
-				if (graph[nx][ny] == 0 && (ripenTime[nx][ny] == 0 || ripenTime[nx][ny] > ripenTime[x][y] + 1)) {
+				if (graph[nx][ny] == 0 && ripenTime[nx][ny] == 0) {
 					ripenTime[nx][ny] = ripenTime[x][y] + 1;
-					q.offer(new Node(nx, ny));
+					q.offer(new Mode(nx, ny));
 				}
 			}
+			count++;
 		}
 	}
 
@@ -74,9 +72,11 @@ public class Tomato {
 		else {
 			for (int i = 1; i <= n; i++) {
 				for (int j = 1; j <= m; j++) {
-					bfs(i, j);
+					if (graph[i][j] == 1) q.offer(new Mode(i, j));
 				}
 			}
+			
+			bfs();
 			
 			allRipe = true;
 			int maximum = Integer.MIN_VALUE;
