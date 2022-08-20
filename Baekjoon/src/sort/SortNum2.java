@@ -9,6 +9,7 @@ public class SortNum2 {
 			
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		int n = Integer.parseInt(br.readLine());
 		
 		for (int i = 0; i < n; i++) {
@@ -16,9 +17,9 @@ public class SortNum2 {
 		}
 		
 		for (int i = 0; i < 2000001; i++) {
-			if (arr[i]) System.out.println(i - 1000000);
+			if (arr[i]) sb.append(i - 1000000).append('\n');
 		}
-		
+		System.out.print(sb);
 	}
 
 }
